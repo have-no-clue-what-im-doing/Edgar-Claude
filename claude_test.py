@@ -3,8 +3,8 @@ import base64
 
 api_key = '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'
 
-with open('AMD_10K.pdf', 'rb') as file:
-    file_content = base64.b64encode(file.read()).decode('utf-8')
+with open('AMD_10K_part_1.pdf', 'rb') as file:
+    file_content = base64.standard_b64encode(file.read()).decode('utf-8')
 
 client = anthropic.Anthropic(
     # defaults to os.environ.get("ANTHROPIC_API_KEY")
@@ -13,7 +13,7 @@ client = anthropic.Anthropic(
 message = client.beta.messages.create(
     model="claude-3-5-sonnet-20241022",
     betas=["pdfs-2024-09-25"],
-    max_tokens=4096,
+    max_tokens=8192,
     messages=[
         {"role": "user", 
          "content": [
@@ -25,7 +25,7 @@ message = client.beta.messages.create(
                  "data": file_content
              }
          },
-         {"type": "text", "text": "Please analyze this PDF file"}
+         {"type": "text", "text": "Please analyze this PDF file and give me a summary"}
          ]
         }
     ]
